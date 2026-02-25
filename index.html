@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClothFit - Your Fashion Destination</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-tshirt"></i>
+                <span>ClothFit</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#products" onclick="event.preventDefault(); scrollToProducts('men')">Men</a></li>
+                <li><a href="#products" onclick="event.preventDefault(); scrollToProducts('women')">Women</a></li>
+                <li><a href="#products" onclick="event.preventDefault(); scrollToProducts('kids')">Kids</a></li>
+                <li><a href="#products" onclick="event.preventDefault(); scrollToProducts('shoes')">Shoes</a></li>
+                <li><a href="#products" onclick="event.preventDefault(); scrollToProducts('accessories')">Accessories</a></li>
+                <li><a href="#products" onclick="event.preventDefault(); scrollToProducts('sports')">Sports</a></li>
+                <li><a href="#products" onclick="event.preventDefault(); scrollToProducts('ethnic')">Ethnic</a></li>
+                <li><a href="#products" onclick="event.preventDefault(); scrollToProducts('winter')">Winter</a></li>
+            </ul>
+            <div class="nav-icons">
+                <input type="text" placeholder="Search products..." class="search-bar" id="search-bar">
+                <i class="fas fa-search" id="search-icon"></i>
+                <i class="fas fa-user" id="user-icon"></i>
+                <i class="fas fa-heart" id="wishlist-icon"><span class="wishlist-count">0</span></i>
+                <i class="fas fa-shopping-bag" id="cart-icon"><span class="cart-count">0</span></i>
+                <i class="fas fa-bars" id="mobile-menu-toggle"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Fashion That Fits Your Style</h1>
+            <p>Discover the latest trends in clothing and accessories</p>
+            <button class="cta-btn">Shop Now</button>
+        </div>
+    </section>
+
+    <section class="categories">
+        <h2>Shop by Category</h2>
+        <div class="category-grid">
+            <div class="category-card" onclick="scrollToProducts('men')">
+                <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=400" alt="Men">
+                <h3>Men</h3>
+            </div>
+            <div class="category-card" onclick="scrollToProducts('women')">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400" alt="Women">
+                <h3>Women</h3>
+            </div>
+            <div class="category-card" onclick="scrollToProducts('kids')">
+                <img src="https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=400" alt="Kids">
+                <h3>Kids</h3>
+            </div>
+            <div class="category-card" onclick="scrollToProducts('shoes')">
+                <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400" alt="Shoes">
+                <h3>Shoes</h3>
+            </div>
+            <div class="category-card" onclick="scrollToProducts('accessories')">
+                <img src="https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?w=400" alt="Accessories">
+                <h3>Accessories</h3>
+            </div>
+            <div class="category-card" onclick="scrollToProducts('sports')">
+                <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400" alt="Sports">
+                <h3>Sports</h3>
+            </div>
+            <div class="category-card" onclick="scrollToProducts('ethnic')">
+                <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Ethnic">
+                <h3>Ethnic Wear</h3>
+            </div>
+            <div class="category-card" onclick="scrollToProducts('winter')">
+                <img src="https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400" alt="Winter">
+                <h3>Winter Collection</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="products" id="products">
+        <h2>Featured Products</h2>
+        <div class="filter-section">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+                <button class="filter-btn" onclick="filterProducts('men')">Men</button>
+                <button class="filter-btn" onclick="filterProducts('women')">Women</button>
+                <button class="filter-btn" onclick="filterProducts('kids')">Kids</button>
+                <button class="filter-btn" onclick="filterProducts('shoes')">Shoes</button>
+                <button class="filter-btn" onclick="filterProducts('accessories')">Accessories</button>
+                <button class="filter-btn" onclick="filterProducts('sports')">Sports</button>
+                <button class="filter-btn" onclick="filterProducts('ethnic')">Ethnic</button>
+                <button class="filter-btn" onclick="filterProducts('winter')">Winter</button>
+            </div>
+            <div class="sort-filter">
+                <select id="sort-select" onchange="sortProducts(this.value)">
+                    <option value="default">Sort By</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Rating</option>
+                    <option value="discount">Discount</option>
+                </select>
+            </div>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+        <div class="pagination" id="pagination"></div>
+    </section>
+
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <i class="fas fa-times" id="close-cart"></i>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">₹0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="cart-shipping">₹50.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="cart-total">₹0.00</span>
+                </div>
+            </div>
+            <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div class="cart-sidebar" id="wishlist-sidebar">
+        <div class="cart-header">
+            <h3>My Wishlist</h3>
+            <i class="fas fa-times" id="close-wishlist"></i>
+        </div>
+        <div class="cart-items" id="wishlist-items"></div>
+    </div>
+
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content checkout-modal">
+            <span class="close-modal" onclick="closeModal('checkout-modal')">&times;</span>
+            <h2><i class="fas fa-lock"></i> Secure Checkout</h2>
+            <div class="checkout-steps">
+                <div class="step active" id="step-1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Shipping</span>
+                </div>
+                <div class="step" id="step-2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Payment</span>
+                </div>
+                <div class="step" id="step-3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Review</span>
+                </div>
+            </div>
+            
+            <form id="checkout-form">
+                <!-- Step 1: Shipping Information -->
+                <div class="checkout-step-content" id="shipping-step">
+                    <h3>Shipping Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Full Name *</label>
+                            <input type="text" id="checkout-name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Phone Number *</label>
+                            <input type="tel" id="checkout-phone" placeholder="+91 98765 43210" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email Address *</label>
+                        <input type="email" id="checkout-email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Complete Address *</label>
+                        <textarea id="checkout-address" placeholder="House No., Street, Landmark" rows="3" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-city"></i> City *</label>
+                            <input type="text" id="checkout-city" placeholder="Mumbai" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-map-pin"></i> State *</label>
+                            <select id="checkout-state" required>
+                                <option value="">Select State</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="West Bengal">West Bengal</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-mail-bulk"></i> PIN Code *</label>
+                            <input type="text" id="checkout-zip" placeholder="400001" maxlength="6" required>
+                        </div>
+                    </div>
+                    <button type="button" class="next-btn" onclick="goToStep(2)">Continue to Payment <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <!-- Step 2: Payment Method -->
+                <div class="checkout-step-content" id="payment-step" style="display: none;">
+                    <h3>Select Payment Method</h3>
+                    <div class="payment-options">
+                        <div class="payment-option" onclick="selectPaymentMethod('card')">
+                            <input type="radio" name="payment" id="payment-card" value="card">
+                            <label for="payment-card">
+                                <div class="payment-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="payment-details">
+                                    <strong>Credit/Debit Card</strong>
+                                    <p>Visa, Mastercard, Amex, Rupay</p>
+                                </div>
+                                <div class="payment-logos">
+                                    <i class="fab fa-cc-visa"></i>
+                                    <i class="fab fa-cc-mastercard"></i>
+                                    <i class="fab fa-cc-amex"></i>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="payment-option" onclick="selectPaymentMethod('upi')">
+                            <input type="radio" name="payment" id="payment-upi" value="upi">
+                            <label for="payment-upi">
+                                <div class="payment-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="payment-details">
+                                    <strong>UPI Payment</strong>
+                                    <p>Google Pay, PhonePe, Paytm</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="payment-option" onclick="selectPaymentMethod('netbanking')">
+                            <input type="radio" name="payment" id="payment-netbanking" value="netbanking">
+                            <label for="payment-netbanking">
+                                <div class="payment-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="payment-details">
+                                    <strong>Net Banking</strong>
+                                    <p>All major banks supported</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="payment-option" onclick="selectPaymentMethod('wallet')">
+                            <input type="radio" name="payment" id="payment-wallet" value="wallet">
+                            <label for="payment-wallet">
+                                <div class="payment-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <div class="payment-details">
+                                    <strong>Wallets</strong>
+                                    <p>Paytm, PhonePe, Amazon Pay</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="payment-option" onclick="selectPaymentMethod('cod')">
+                            <input type="radio" name="payment" id="payment-cod" value="cod">
+                            <label for="payment-cod">
+                                <div class="payment-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="payment-details">
+                                    <strong>Cash on Delivery</strong>
+                                    <p>Pay when you receive</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="card-details" class="payment-details-form" style="display: none;">
+                        <h4>Enter Card Details</h4>
+                        <div class="form-group">
+                            <label>Card Number *</label>
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="form-group">
+                            <label>Cardholder Name *</label>
+                            <input type="text" id="card-name" placeholder="Name on Card">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Expiry Date *</label>
+                                <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV *</label>
+                                <input type="password" id="card-cvv" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="upi-details" class="payment-details-form" style="display: none;">
+                        <h4>Enter UPI ID</h4>
+                        <div class="form-group">
+                            <label>UPI ID *</label>
+                            <input type="text" id="upi-id" placeholder="yourname@upi">
+                        </div>
+                    </div>
+
+                    <div id="netbanking-details" class="payment-details-form" style="display: none;">
+                        <h4>Select Your Bank</h4>
+                        <div class="form-group">
+                            <select id="bank-select">
+                                <option value="">Choose Bank</option>
+                                <option value="sbi">State Bank of India</option>
+                                <option value="hdfc">HDFC Bank</option>
+                                <option value="icici">ICICI Bank</option>
+                                <option value="axis">Axis Bank</option>
+                                <option value="kotak">Kotak Mahindra Bank</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="back-btn" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="next-btn" onclick="goToStep(3)">Review Order <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Order Review -->
+                <div class="checkout-step-content" id="review-step" style="display: none;">
+                    <h3>Review Your Order</h3>
+                    <div class="order-summary">
+                        <div class="summary-section">
+                            <h4><i class="fas fa-shipping-fast"></i> Shipping Address</h4>
+                            <div id="review-address"></div>
+                        </div>
+                        <div class="summary-section">
+                            <h4><i class="fas fa-credit-card"></i> Payment Method</h4>
+                            <div id="review-payment"></div>
+                        </div>
+                        <div class="summary-section">
+                            <h4><i class="fas fa-shopping-bag"></i> Order Items</h4>
+                            <div id="review-items"></div>
+                        </div>
+                        <div class="summary-section price-summary">
+                            <div class="price-row">
+                                <span>Subtotal:</span>
+                                <span id="review-subtotal">₹0.00</span>
+                            </div>
+                            <div class="price-row">
+                                <span>Shipping:</span>
+                                <span id="review-shipping">₹50.00</span>
+                            </div>
+                            <div class="price-row total">
+                                <span>Total Amount:</span>
+                                <span id="review-total">₹0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="back-btn" onclick="goToStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="place-order-btn"><i class="fas fa-check-circle"></i> Place Order</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="product-modal">
+        <div class="modal-content product-detail">
+            <span class="close-modal" onclick="closeModal('product-modal')">&times;</span>
+            <div id="product-detail-content"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="login-modal">
+        <div class="modal-content login-modal">
+            <span class="close-modal" onclick="closeModal('login-modal')">&times;</span>
+            <div class="login-container">
+                <div class="login-tabs">
+                    <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+                    <button class="tab-btn" onclick="switchTab('register')">Register</button>
+                </div>
+
+                <!-- Login Tab -->
+                <div id="login-tab" class="auth-tab">
+                    <div class="login-header">
+                        <h2>Welcome Back!</h2>
+                        <p>Login to continue shopping</p>
+                    </div>
+                    
+                    <div id="login-phone-step" class="login-step">
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Mobile Number</label>
+                            <div class="phone-input">
+                                <span class="country-code">+91</span>
+                                <input type="tel" id="login-phone" placeholder="Enter 10 digit mobile number" maxlength="10" pattern="[0-9]{10}">
+                            </div>
+                        </div>
+                        <button class="login-btn" onclick="sendLoginOTP()"><i class="fas fa-paper-plane"></i> Send OTP</button>
+                    </div>
+
+                    <div id="login-otp-step" class="login-step" style="display: none;">
+                        <div class="otp-sent-message">
+                            <i class="fas fa-check-circle"></i>
+                            <p>OTP sent to <strong id="login-display-phone"></strong></p>
+                            <button class="change-number" onclick="changeLoginNumber()">Change Number</button>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-key"></i> Enter OTP</label>
+                            <div class="otp-inputs">
+                                <input type="text" maxlength="1" class="otp-input" id="login-otp1" oninput="moveToNext(this, 'login-otp2')">
+                                <input type="text" maxlength="1" class="otp-input" id="login-otp2" oninput="moveToNext(this, 'login-otp3')">
+                                <input type="text" maxlength="1" class="otp-input" id="login-otp3" oninput="moveToNext(this, 'login-otp4')">
+                                <input type="text" maxlength="1" class="otp-input" id="login-otp4" oninput="moveToNext(this, 'login-otp5')">
+                                <input type="text" maxlength="1" class="otp-input" id="login-otp5" oninput="moveToNext(this, 'login-otp6')">
+                                <input type="text" maxlength="1" class="otp-input" id="login-otp6">
+                            </div>
+                        </div>
+                        <button class="login-btn" onclick="verifyLoginOTP()"><i class="fas fa-check"></i> Verify & Login</button>
+                        <p class="resend-otp">Didn't receive OTP? <a href="#" onclick="resendLoginOTP(); return false;">Resend OTP</a></p>
+                    </div>
+                </div>
+
+                <!-- Register Tab -->
+                <div id="register-tab" class="auth-tab" style="display: none;">
+                    <div class="login-header">
+                        <h2>Create Account</h2>
+                        <p>Sign up to get started</p>
+                    </div>
+                    
+                    <div id="register-form-step" class="login-step">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Full Name</label>
+                            <input type="text" id="register-name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Email Address</label>
+                            <input type="email" id="register-email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Mobile Number</label>
+                            <div class="phone-input">
+                                <span class="country-code">+91</span>
+                                <input type="tel" id="register-phone" placeholder="Enter 10 digit mobile number" maxlength="10" pattern="[0-9]{10}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Password</label>
+                            <input type="password" id="register-password" placeholder="Create a password" minlength="6" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Confirm Password</label>
+                            <input type="password" id="register-confirm-password" placeholder="Confirm your password" minlength="6" required>
+                        </div>
+                        <button class="login-btn" onclick="registerUser()"><i class="fas fa-user-plus"></i> Create Account</button>
+                    </div>
+
+                    <div id="register-otp-step" class="login-step" style="display: none;">
+                        <div class="otp-sent-message">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Verification OTP sent to <strong id="register-display-phone"></strong></p>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-key"></i> Enter OTP</label>
+                            <div class="otp-inputs">
+                                <input type="text" maxlength="1" class="otp-input" id="reg-otp1" oninput="moveToNext(this, 'reg-otp2')">
+                                <input type="text" maxlength="1" class="otp-input" id="reg-otp2" oninput="moveToNext(this, 'reg-otp3')">
+                                <input type="text" maxlength="1" class="otp-input" id="reg-otp3" oninput="moveToNext(this, 'reg-otp4')">
+                                <input type="text" maxlength="1" class="otp-input" id="reg-otp4" oninput="moveToNext(this, 'reg-otp5')">
+                                <input type="text" maxlength="1" class="otp-input" id="reg-otp5" oninput="moveToNext(this, 'reg-otp6')">
+                                <input type="text" maxlength="1" class="otp-input" id="reg-otp6">
+                            </div>
+                        </div>
+                        <button class="login-btn" onclick="verifyRegisterOTP()"><i class="fas fa-check"></i> Verify & Register</button>
+                        <p class="resend-otp">Didn't receive OTP? <a href="#" onclick="resendRegisterOTP(); return false;">Resend OTP</a></p>
+                    </div>
+                </div>
+
+                <div class="login-benefits">
+                    <h4>Benefits of Account</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Track your orders</li>
+                        <li><i class="fas fa-check"></i> Save your wishlist</li>
+                        <li><i class="fas fa-check"></i> Faster checkout</li>
+                        <li><i class="fas fa-check"></i> Exclusive offers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-tshirt"></i>
+                        <h3>ClothFit</h3>
+                    </div>
+                    <p>Your trusted fashion destination for premium quality clothing and accessories. Shop the latest trends with confidence.</p>
+                    <div class="app-download">
+                        <h4>Download Our App</h4>
+                        <div class="app-buttons">
+                            <a href="#" class="app-btn">
+                                <i class="fab fa-google-play"></i>
+                                <div>
+                                    <small>GET IT ON</small>
+                                    <strong>Google Play</strong>
+                                </div>
+                            </a>
+                            <a href="#" class="app-btn">
+                                <i class="fab fa-apple"></i>
+                                <div>
+                                    <small>Download on the</small>
+                                    <strong>App Store</strong>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Men's Fashion</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Women's Fashion</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Kids Wear</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Footwear</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Accessories</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Sports & Fitness</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Track Order</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Return & Exchange</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Shipping Info</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Size Guide</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>About ClothFit</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Careers</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Press & Media</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Terms & Conditions</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Sitemap</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Fashion Street, Mumbai,<br>Maharashtra 400001, India</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+91 98765 43210</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>support@clothfit.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Mon - Sat: 9:00 AM - 9:00 PM</span>
+                        </li>
+                    </ul>
+                    <div class="social-section">
+                        <h4>Follow Us</h4>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-features">
+            <div class="feature-item">
+                <i class="fas fa-shipping-fast"></i>
+                <div>
+                    <strong>Free Shipping</strong>
+                    <p>On orders above ₹999</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-undo"></i>
+                <div>
+                    <strong>Easy Returns</strong>
+                    <p>30 days return policy</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-lock"></i>
+                <div>
+                    <strong>Secure Payment</strong>
+                    <p>100% secure transactions</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-headset"></i>
+                <div>
+                    <strong>24/7 Support</strong>
+                    <p>Dedicated customer service</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="payment-methods">
+                <span>We Accept:</span>
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <p class="copyright">&copy; 2024 ClothFit. All rights reserved. | Designed By Rishikant Sharma <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
